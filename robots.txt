@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: 
+
+Sitemap: http://phildobbin.github.com/sitemap.xml 
