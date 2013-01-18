@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Sudoers-d]]></title>
+  <title><![CDATA[Sudoersd]]></title>
   <link href="http://phildobbin.github.com/atom.xml" rel="self"/>
   <link href="http://phildobbin.github.com/"/>
-  <updated>2013-01-18T07:22:57+00:00</updated>
+  <updated>2013-01-18T08:08:47+00:00</updated>
   <id>http://phildobbin.github.com/</id>
   <author>
     <name><![CDATA[Phil Dobbin]]></name>
@@ -30,7 +30,7 @@
 
 <p>Now we need to install our toolbox:</p>
 
-<p>` $ sudo yum groupinstall &#8216;Development Tools&#8217;</p>
+<p><code>$ sudo yum groupinstall 'Development Tools'</code></p>
 
 <p>This will give us gcc, bison, flex plus a lot of other stuff we need to build vim. I always build vim +huge +perl +ruby +python. CentOS 6.3 comes with perl 5.10 &amp; python 2.6.6 already installed. So we need to install ruby:</p>
 
@@ -69,6 +69,8 @@
 <p>At the time of writing, passing <code>$ vim --version</code> gives me <code>vim 7.3.762</code></p>
 
 <p>which is a hell of a lot more useful than 7.2.411&#8230;</p>
+
+<p>[1] https://github.com/horse-latitudes/horse-vimfiles.git</p>
 ]]></content>
   </entry>
   
