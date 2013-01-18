@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>My Octopress Blog</title>
-  <meta name="author" content="Your Name">
+  <title>Sudoers-d</title>
+  <meta name="author" content="Phil Dobbin">
 
   
-  <meta name="description" content=" Blog Archives Recent Posts ">
+  <meta name="description" content="CentOS, even at version 6.3, comes with a very old version of vim: 7.2.411. Whilst this maybe sufficient for most every day tasks, when you carry &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -24,7 +24,7 @@
   <script src="/javascripts/modernizr-2.0.js"></script>
   <script src="/javascripts/ender.js"></script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <link href="/atom.xml" rel="alternate" title="Sudoers-d" type="application/atom+xml">
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
@@ -35,9 +35,9 @@
 
 <body   >
   <header role="banner"><hgroup>
-  <h1><a href="/">My Octopress Blog</a></h1>
+  <h1><a href="/">Sudoers-d</a></h1>
   
-    <h2>A blogging framework for hackers.</h2>
+    <h2>A system administartion journal</h2>
   
 </hgroup>
 
@@ -65,6 +65,92 @@
       <div class="blog-index">
   
   
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/01/18/installing-vim-on-centos-6-dot-3/">Installing Vim on CentOS 6.3</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-18T06:11:00+00:00" pubdate data-updated="true">Jan 18<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>CentOS, even at version 6.3, comes with a very old version of vim: 7.2.411. Whilst this maybe sufficient for most every day tasks, when you carry your $VIMRUNTIME around with you like I do [1], it&#8217;s irritating to call a familiar mapping only to have something like an E117 error thrown because your vim version is only 7.2.  Vim 7.3 added some great new stuff. There&#8217;s no point in not using it.</p>
+
+<p>So, first of all, we need to grab the sources from Mercurial. Vim is stored in the Google code repos &amp; to get it we need have have Mercurial installed. If you haven&#8217;t got it already, you can use yum to install it:</p>
+
+<p><code>$ sudo yum install mercurial</code></p>
+
+<p>After that cd to your build directory (in my case ~/Downloads/build) &amp; run this in your terminal:</p>
+
+<p><code>$ hg clone https://vim.googlecode.com/hg/ vim</code></p>
+
+<p>Now we need to install our toolbox:</p>
+
+<p>` $ sudo yum groupinstall &#8216;Development Tools&#8217;</p>
+
+<p>This will give us gcc, bison, flex plus a lot of other stuff we need to build vim. I always build vim +huge +perl +ruby +python. CentOS 6.3 comes with perl 5.10 &amp; python 2.6.6 already installed. So we need to install ruby:</p>
+
+<p><code>$ sudo yum install ruby</code></p>
+
+<p>This will install ruby-1.8.7-p362 which is itself pretty old by now &amp; not recommended for production use anymore in something like Ruby on Rails but for our purposes, it&#8217;ll do fine.</p>
+
+<p>Now we need the header files for the build so we run this command:</p>
+
+<p><code>$ sudo yum install perl-devel python-devel ruby-devel</code></p>
+
+<p>which will give us the requisite header files for our build.</p>
+
+<p>Two more dependencies are needed or configure will throw an error &amp; if you proceed, make will fail. These are:</p>
+
+<p><code>$ sudo yum install perl-ExtUtils-Embed ncurses-devel</code></p>
+
+<p>So now we&#8217;re ready to go. Cd to the build directory (in my case ~/Downloads/build/vim) &amp; run configure:</p>
+
+<p><code>$ ./configure --with-features=huge --enable-perlinterp --enable-rubyinterp --enable-pythoninterp</code></p>
+
+<p>Let configure do its thing &amp; then go back through stdout &amp; check all was OK. If you&#8217;ve got a standard install of everything via yum, configure should&#8217;ve found everything without too much trouble.</p>
+
+<p>Now run <code>make</code>. After a short while, if all&#8217;s well &amp; no errors are written to stdout by make, we&#8217;re ready to install. The default target for the install is /usr/local (if you don&#8217;t have root on the box, pass the relevant flag to configure before you start to direct to your $HOME/) so we issue this command:</p>
+
+<p><code>$ sudo make install</code></p>
+
+<p>So finally call:</p>
+
+<p><code>$ type vim</code></p>
+
+<p>&amp; it should return:</p>
+
+<p><code>$ vim is hashed (/usr/local/bin/vim)</code></p>
+
+<p>At the time of writing, passing <code>$ vim --version</code> gives me <code>vim 7.3.762</code></p>
+
+<p>which is a hell of a lot more useful than 7.2.411&#8230;</p>
+</div>
+  
+  
+
+
+    </article>
+  
   <div class="pagination">
     
     <a href="/blog/archives">Blog Archives</a>
@@ -77,9 +163,58 @@
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
     
+      <li class="post">
+        <a href="/blog/2013/01/18/installing-vim-on-centos-6-dot-3/">Installing Vim on CentOS 6.3</a>
+      </li>
+    
   </ul>
 </section>
 
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/horse-latitudes">@horse-latitudes</a> on GitHub
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'horse-latitudes',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("sudoersd", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/sudoersd" class="twitter-follow-button" data-show-count="false">Follow @sudoersd</a>
+  
+</section>
 
 
 
@@ -91,7 +226,7 @@
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2013 - Your Name -
+  Copyright &copy; 2013 - Phil Dobbin -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 
@@ -99,6 +234,15 @@
   
 
 
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 
 
 

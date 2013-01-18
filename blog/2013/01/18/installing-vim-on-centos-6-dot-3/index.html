@@ -5,12 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Blog Archive - Sudoers-d</title>
+  <title>Installing Vim on CentOS 6.3 - Sudoers-d</title>
   <meta name="author" content="Phil Dobbin">
 
   
-  <meta name="description" content="Blog Archive 2013 Installing Vim on CentOS 6.3
-Jan 18 2013 Recent Posts Installing Vim on CentOS 6.3 GitHub Repos Status updating... @horse- &hellip;">
+  <meta name="description" content="CentOS, even at version 6.3, comes with a very old version of vim: 7.2.411. Whilst this maybe sufficient for most every day tasks, when you carry &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +18,7 @@ Jan 18 2013 Recent Posts Installing Vim on CentOS 6.3 GitHub Repos Status updati
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://phildobbin.github.com/blog/archives/">
+  <link rel="canonical" href="http://phildobbin.github.com/blog/2013/01/18/installing-vim-on-centos-6-dot-3/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -64,31 +63,128 @@ Jan 18 2013 Recent Posts Installing Vim on CentOS 6.3 GitHub Repos Status updati
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Blog Archive</h1>
+    
+      <h1 class="entry-title">Installing Vim on CentOS 6.3</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-18T06:11:00+00:00" pubdate data-updated="true">Jan 18<span>th</span>, 2013</time>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives">
 
 
+<div class="entry-content"><p>CentOS, even at version 6.3, comes with a very old version of vim: 7.2.411. Whilst this maybe sufficient for most every day tasks, when you carry your $VIMRUNTIME around with you like I do [1], it&#8217;s irritating to call a familiar mapping only to have something like an E117 error thrown because your vim version is only 7.2.  Vim 7.3 added some great new stuff. There&#8217;s no point in not using it.</p>
 
-  
-  <h2>2013</h2>
+<p>So, first of all, we need to grab the sources from Mercurial. Vim is stored in the Google code repos &amp; to get it we need have have Mercurial installed. If you haven&#8217;t got it already, you can use yum to install it:</p>
 
-<article>
-  
-<h1><a href="/blog/2013/01/18/installing-vim-on-centos-6-dot-3/">Installing Vim on CentOS 6.3</a></h1>
-<time datetime="2013-01-18T06:11:00+00:00" pubdate><span class='month'>Jan</span> <span class='day'>18</span> <span class='year'>2013</span></time>
+<p><code>$ sudo yum install mercurial</code></p>
 
+<p>After that cd to your build directory (in my case ~/Downloads/build) &amp; run this in your terminal:</p>
 
-</article>
+<p><code>$ hg clone https://vim.googlecode.com/hg/ vim</code></p>
 
+<p>Now we need to install our toolbox:</p>
+
+<p>` $ sudo yum groupinstall &#8216;Development Tools&#8217;</p>
+
+<p>This will give us gcc, bison, flex plus a lot of other stuff we need to build vim. I always build vim +huge +perl +ruby +python. CentOS 6.3 comes with perl 5.10 &amp; python 2.6.6 already installed. So we need to install ruby:</p>
+
+<p><code>$ sudo yum install ruby</code></p>
+
+<p>This will install ruby-1.8.7-p362 which is itself pretty old by now &amp; not recommended for production use anymore in something like Ruby on Rails but for our purposes, it&#8217;ll do fine.</p>
+
+<p>Now we need the header files for the build so we run this command:</p>
+
+<p><code>$ sudo yum install perl-devel python-devel ruby-devel</code></p>
+
+<p>which will give us the requisite header files for our build.</p>
+
+<p>Two more dependencies are needed or configure will throw an error &amp; if you proceed, make will fail. These are:</p>
+
+<p><code>$ sudo yum install perl-ExtUtils-Embed ncurses-devel</code></p>
+
+<p>So now we&#8217;re ready to go. Cd to the build directory (in my case ~/Downloads/build/vim) &amp; run configure:</p>
+
+<p><code>$ ./configure --with-features=huge --enable-perlinterp --enable-rubyinterp --enable-pythoninterp</code></p>
+
+<p>Let configure do its thing &amp; then go back through stdout &amp; check all was OK. If you&#8217;ve got a standard install of everything via yum, configure should&#8217;ve found everything without too much trouble.</p>
+
+<p>Now run <code>make</code>. After a short while, if all&#8217;s well &amp; no errors are written to stdout by make, we&#8217;re ready to install. The default target for the install is /usr/local (if you don&#8217;t have root on the box, pass the relevant flag to configure before you start to direct to your $HOME/) so we issue this command:</p>
+
+<p><code>$ sudo make install</code></p>
+
+<p>So finally call:</p>
+
+<p><code>$ type vim</code></p>
+
+<p>&amp; it should return:</p>
+
+<p><code>$ vim is hashed (/usr/local/bin/vim)</code></p>
+
+<p>At the time of writing, passing <code>$ vim --version</code> gives me <code>vim 7.3.762</code></p>
+
+<p>which is a hell of a lot more useful than 7.2.411&#8230;</p>
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">Phil Dobbin</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-18T06:11:00+00:00" pubdate data-updated="true">Jan 18<span>th</span>, 2013</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://phildobbin.github.com/blog/2013/01/18/installing-vim-on-centos-6-dot-3/" data-via="sudoersd" data-counturl="http://phildobbin.github.com/blog/2013/01/18/installing-vim-on-centos-6-dot-3/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+      
+    </p>
+  </footer>
 </article>
 
 </div>

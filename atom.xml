@@ -1,16 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[My Octopress Blog]]></title>
+  <title><![CDATA[Sudoers-d]]></title>
   <link href="http://phildobbin.github.com/atom.xml" rel="self"/>
   <link href="http://phildobbin.github.com/"/>
-  <updated>2013-01-18T06:02:17+00:00</updated>
+  <updated>2013-01-18T07:22:57+00:00</updated>
   <id>http://phildobbin.github.com/</id>
   <author>
-    <name><![CDATA[Your Name]]></name>
+    <name><![CDATA[Phil Dobbin]]></name>
     
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Installing Vim on CentOS 6.3]]></title>
+    <link href="http://phildobbin.github.com/blog/2013/01/18/installing-vim-on-centos-6-dot-3/"/>
+    <updated>2013-01-18T06:11:00+00:00</updated>
+    <id>http://phildobbin.github.com/blog/2013/01/18/installing-vim-on-centos-6-dot-3</id>
+    <content type="html"><![CDATA[<p>CentOS, even at version 6.3, comes with a very old version of vim: 7.2.411. Whilst this maybe sufficient for most every day tasks, when you carry your $VIMRUNTIME around with you like I do [1], it&#8217;s irritating to call a familiar mapping only to have something like an E117 error thrown because your vim version is only 7.2.  Vim 7.3 added some great new stuff. There&#8217;s no point in not using it.</p>
+
+<p>So, first of all, we need to grab the sources from Mercurial. Vim is stored in the Google code repos &amp; to get it we need have have Mercurial installed. If you haven&#8217;t got it already, you can use yum to install it:</p>
+
+<p><code>$ sudo yum install mercurial</code></p>
+
+<p>After that cd to your build directory (in my case ~/Downloads/build) &amp; run this in your terminal:</p>
+
+<p><code>$ hg clone https://vim.googlecode.com/hg/ vim</code></p>
+
+<p>Now we need to install our toolbox:</p>
+
+<p>` $ sudo yum groupinstall &#8216;Development Tools&#8217;</p>
+
+<p>This will give us gcc, bison, flex plus a lot of other stuff we need to build vim. I always build vim +huge +perl +ruby +python. CentOS 6.3 comes with perl 5.10 &amp; python 2.6.6 already installed. So we need to install ruby:</p>
+
+<p><code>$ sudo yum install ruby</code></p>
+
+<p>This will install ruby-1.8.7-p362 which is itself pretty old by now &amp; not recommended for production use anymore in something like Ruby on Rails but for our purposes, it&#8217;ll do fine.</p>
+
+<p>Now we need the header files for the build so we run this command:</p>
+
+<p><code>$ sudo yum install perl-devel python-devel ruby-devel</code></p>
+
+<p>which will give us the requisite header files for our build.</p>
+
+<p>Two more dependencies are needed or configure will throw an error &amp; if you proceed, make will fail. These are:</p>
+
+<p><code>$ sudo yum install perl-ExtUtils-Embed ncurses-devel</code></p>
+
+<p>So now we&#8217;re ready to go. Cd to the build directory (in my case ~/Downloads/build/vim) &amp; run configure:</p>
+
+<p><code>$ ./configure --with-features=huge --enable-perlinterp --enable-rubyinterp --enable-pythoninterp</code></p>
+
+<p>Let configure do its thing &amp; then go back through stdout &amp; check all was OK. If you&#8217;ve got a standard install of everything via yum, configure should&#8217;ve found everything without too much trouble.</p>
+
+<p>Now run <code>make</code>. After a short while, if all&#8217;s well &amp; no errors are written to stdout by make, we&#8217;re ready to install. The default target for the install is /usr/local (if you don&#8217;t have root on the box, pass the relevant flag to configure before you start to direct to your $HOME/) so we issue this command:</p>
+
+<p><code>$ sudo make install</code></p>
+
+<p>So finally call:</p>
+
+<p><code>$ type vim</code></p>
+
+<p>&amp; it should return:</p>
+
+<p><code>$ vim is hashed (/usr/local/bin/vim)</code></p>
+
+<p>At the time of writing, passing <code>$ vim --version</code> gives me <code>vim 7.3.762</code></p>
+
+<p>which is a hell of a lot more useful than 7.2.411&#8230;</p>
+]]></content>
+  </entry>
   
 </feed>
