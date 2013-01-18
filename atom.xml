@@ -4,7 +4,7 @@
   <title><![CDATA[Sudoersd]]></title>
   <link href="http://phildobbin.github.com/atom.xml" rel="self"/>
   <link href="http://phildobbin.github.com/"/>
-  <updated>2013-01-18T08:17:33+00:00</updated>
+  <updated>2013-01-18T08:20:51+00:00</updated>
   <id>http://phildobbin.github.com/</id>
   <author>
     <name><![CDATA[Phil Dobbin]]></name>
@@ -18,7 +18,7 @@
     <link href="http://phildobbin.github.com/blog/2013/01/18/installing-vim-on-centos-6-dot-3/"/>
     <updated>2013-01-18T06:11:00+00:00</updated>
     <id>http://phildobbin.github.com/blog/2013/01/18/installing-vim-on-centos-6-dot-3</id>
-    <content type="html"><![CDATA[<p>CentOS, even at version 6.3, comes with a very old version of vim: 7.2.411. Whilst this maybe sufficient for most every day tasks, when you carry your $VIMRUNTIME around with you like I do <a href="https://github.com/horse-latitudes/horse-vimfiles.git">1</a>, it&#8217;s irritating to call a familiar mapping only to have something like an E117 error thrown because your vim version is only 7.2.  Vim 7.3 added some great new stuff. There&#8217;s no point in not using it.</p>
+    <content type="html"><![CDATA[<p>CentOS, even at version 6.3, comes with a very old version of vim: 7.2.411. Whilst this maybe sufficient for most every day tasks, when you carry your $VIMRUNTIME around with you like I [do], it&#8217;s irritating to call a familiar mapping only to have something like an E117 error thrown because your vim version is only 7.2.  Vim 7.3 added some great new stuff. There&#8217;s no point in not using it.</p>
 
 <p>So, first of all, we need to grab the sources from Mercurial. Vim is stored in the Google code repos &amp; to get it we need have have Mercurial installed. If you haven&#8217;t got it already, you can use yum to install it:</p>
 
